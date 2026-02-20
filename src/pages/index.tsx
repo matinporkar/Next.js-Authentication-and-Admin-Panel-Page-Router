@@ -11,8 +11,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-console.log("hiiiii")
-
 export default function Home() {
   return (
     <div
