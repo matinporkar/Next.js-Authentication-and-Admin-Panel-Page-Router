@@ -1,6 +1,7 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { Formik, Form } from 'formik'
 import { NextPage } from 'next'
 import * as Yup from 'yup'
+import Input from '../../../app/components/shared/input'
 
 interface RegisterFormValues {
     name: string,
@@ -17,9 +18,9 @@ const Register: NextPage = () => {
     }
 
     const validationSchema = Yup.object({
-        name: Yup.string().required("پر کردن این فیلد الزامیه"),
-        email: Yup.string().email("یک ایمیل معتبر وارد کن").required("پر کردن این فیلد الزامیه"),
-        password: Yup.string().min(6, "حداقل 6 کاراکتر الزامیه").required("پر کردن این فیلد الزامیه")
+        name: Yup.string().required(),
+        email: Yup.string().email().required(),
+        password: Yup.string().min(6).required()
     })
 
     const registerFormHandler = (values: RegisterFormValues, actions) => {
@@ -40,23 +41,11 @@ const Register: NextPage = () => {
                     >
                         <Form className="space-y-5">
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">name : </label>
-                                <Field className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:outline-none transition" name="name" type="text" />
-                                <ErrorMessage className="text-xs text-red-500 mt-1" name="name" />
-                            </div>
+                            <Input labelTitle='name' inputName='name' Type='text' errorName='name' />
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">email : </label>
-                                <Field className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:outline-none transition" name="email" type="email" />
-                                <ErrorMessage className="text-xs text-red-500 mt-1" name="email" />
-                            </div>
+                            <Input labelTitle='email' inputName='email' Type='email' errorName='email' />
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">password : </label>
-                                <Field className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:outline-none transition" name="password" type="password" />
-                                <ErrorMessage className="text-xs text-red-500 mt-1" name="password" />
-                            </div>
+                            <Input labelTitle='password' inputName='password' Type='password' errorName='password' />
 
                             <button className="w-full bg-black text-white py-2 rounded-lg font-medium hover:bg-gray-800 transition duration-200 disabled:opacity-60" type='submit'>Submit</button>
 
