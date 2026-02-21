@@ -21,7 +21,7 @@ api.interceptors.response.use(
     (response: AxiosResponse) => {
         return response;
     },
-    (error: AxiosError) => {
+    (error: AxiosError<{ type: string; errors?: Record<string, string>; message?: string }>) => {
         return Promise.reject(error);
     },
 );

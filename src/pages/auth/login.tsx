@@ -1,11 +1,12 @@
-import { Formik, Form } from 'formik'
+import { Formik, Form, FormikHelpers } from 'formik'
 import { NextPage } from 'next'
 import * as Yup from 'yup'
 import Input from '../../../app/components/shared/input'
 import Link from 'next/link'
 import api from '../../../app/services/callApi'
 import { useCookies } from 'react-cookie'
-import  Router  from 'next/router'
+import Router from 'next/router'
+import { AxiosError } from 'axios'
 
 interface LoginFormValues {
     email: string,
@@ -14,7 +15,7 @@ interface LoginFormValues {
 
 const Login: NextPage = () => {
 
-    const [cookie , setCookie] = useCookies(["shop-token"])
+    const [cookie, setCookie] = useCookies(["shop-token"])
 
     const initialValues: LoginFormValues = {
         email: "",
@@ -26,17 +27,26 @@ const Login: NextPage = () => {
         password: Yup.string().required()
     })
 
-    const loginFormHandler = async (values: LoginFormValues, actions) => {
-        const res = await api.post("/auth/login" , values)
-        if (res.status == 200) {
-            actions.resetForm()
-            setCookie("shop-token", res.data.token,{
-                "maxAge" : 3600 * 24 * 30,
-                "domain" : "localhost",
-                "path" : "/",
-                "sameSite" : "lax"
-            })
-            Router.push("/")
+    const loginFormHandler = async (values: LoginFormValues, actions: FormikHelpers<LoginFormValues>) => {
+        try {
+            const res = await api.post("/auth/login", values)
+            if (res.status == 200) {
+                actions.resetForm()
+                setCookie("shop-token", res.data.token, {
+                    "maxAge": 3600 * 24 * 30,
+                    "domain": "localhost",
+                    "path": "/",
+                    "sameSite": "lax"
+                })
+                Router.push("/")
+            }
+        } catch (err) {
+            const error = err as AxiosError<{ type: string; errors?: Record<string, string>; message?: string }>
+            if (error.response?.data?.type === "ValidationError" && error.response.data.errors) {
+                actions.setErrors(error.response.data.errors) 
+            } else {
+                console.log("this is general error and it hasnt type for showing in form")
+            }
         }
     }
 
