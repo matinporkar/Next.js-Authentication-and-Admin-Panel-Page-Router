@@ -3,6 +3,9 @@ import { NextPage } from 'next'
 import * as Yup from 'yup'
 import Input from '../../../app/components/shared/input'
 import Link from 'next/link'
+import api from '../../../app/services/callApi'
+import  Router  from 'next/router'
+
 
 interface RegisterFormValues {
     name: string,
@@ -21,12 +24,15 @@ const Register: NextPage = () => {
     const validationSchema = Yup.object({
         name: Yup.string().required(),
         email: Yup.string().email().required(),
-        password: Yup.string().min(6).required()
+        password: Yup.string().min(8).required()
     })
 
-    const registerFormHandler = (values: RegisterFormValues, actions) => {
-        console.log(values)
-        actions.resetForm()
+    const registerFormHandler = async (values: RegisterFormValues, actions) => {
+        const res = await api.post("/auth/register",values)
+        if (res.status == 201) {
+            actions.resetForm()
+            Router.push("/auth/login")
+        }
     }
 
     return (
