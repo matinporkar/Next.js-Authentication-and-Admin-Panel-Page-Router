@@ -3,6 +3,9 @@ import { NextPage } from 'next'
 import * as Yup from 'yup'
 import Input from '../../../app/components/shared/input'
 import Link from 'next/link'
+import api from '../../../app/services/callApi'
+import { useCookies } from 'react-cookie'
+import  Router  from 'next/router'
 
 interface LoginFormValues {
     email: string,
@@ -10,6 +13,8 @@ interface LoginFormValues {
 }
 
 const Login: NextPage = () => {
+
+    const [cookie , setCookie] = useCookies(["shop-token"])
 
     const initialValues: LoginFormValues = {
         email: "",
@@ -21,9 +26,18 @@ const Login: NextPage = () => {
         password: Yup.string().required()
     })
 
-    const loginFormHandler = (values: LoginFormValues, actions) => {
-        console.log(values)
-        actions.resetForm()
+    const loginFormHandler = async (values: LoginFormValues, actions) => {
+        const res = await api.post("/auth/login" , values)
+        if (res.status == 200) {
+            actions.resetForm()
+            setCookie("shop-token", res.data.token,{
+                "maxAge" : 3600 * 24 * 30,
+                "domain" : "localhost",
+                "path" : "/",
+                "sameSite" : "lax"
+            })
+            Router.push("/")
+        }
     }
 
     return (

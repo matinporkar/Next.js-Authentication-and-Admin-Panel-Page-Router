@@ -19,7 +19,6 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
     (response: AxiosResponse) => {
-        console.log("user registered");
         return response;
     },
     (error: AxiosError) => {
