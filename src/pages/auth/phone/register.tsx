@@ -1,10 +1,10 @@
 import { Formik, Form } from 'formik'
 import { NextPage } from 'next'
 import * as Yup from 'yup'
-import Input from '../../../app/components/shared/input'
 import Link from 'next/link'
-import api from '../../../app/services/callApi'
 import Router from 'next/router'
+import api from '../../../../app/services/callApi'
+import Input from '../../../../app/components/shared/input'
 
 
 interface RegisterFormValues {
@@ -50,9 +50,7 @@ const Register: NextPage = () => {
 
                             <Input labelTitle='name' inputName='name' Type='text' errorName='name' />
 
-                            <Input labelTitle='email' inputName='email' Type='email' errorName='email' />
-
-                            <Input labelTitle='password' inputName='password' Type='password' errorName='password' />
+                            <Input labelTitle='phone' inputName='phone' Type='phone' errorName='phone' />
 
                             <button className="w-full bg-black text-white py-2 rounded-lg font-medium hover:bg-gray-800 transition duration-200 disabled:opacity-60" type='submit'>Submit</button>
 
@@ -60,7 +58,7 @@ const Register: NextPage = () => {
                     </Formik>
 
                     <p className="text-xs text-center text-gray-400 mt-6">
-                        <Link href="/auth/phone/register"><span className="underline cursor-pointer">Register with phone number</span></Link>
+                        <Link href="/auth/register"><span className="underline cursor-pointer">Register with email address</span></Link>
                     </p>
 
                     <p className="text-xs text-center text-gray-400 mt-6">
