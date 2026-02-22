@@ -5,7 +5,7 @@ interface InputProps {
     labelTitle: string,
     labelClass?: string,
     inputName: string,
-    Type: string,
+    Type?: string,
     inputClass?: string,
     errorName: string,
     errorClass?: string

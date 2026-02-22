@@ -14,7 +14,7 @@ interface LoginFormValues {
 
 const Login: NextPage = () => {
 
-    const [cookie, setCookie] = useCookies(["shop-token"])
+    const [cookie, setCookie] = useCookies(["code-token"])
 
     const initialValues: LoginFormValues = {
         phone: "09"
@@ -31,13 +31,13 @@ const Login: NextPage = () => {
             const res = await api.post("/auth/login", values)
             if (res.status == 200) {
                 actions.resetForm()
-                setCookie("shop-token", res.data.token, {
-                    "maxAge": 3600 * 24 * 30,
+                setCookie("code-token", res.data.token, {
+                    "maxAge": 60,
                     "domain": "localhost",
                     "path": "/",
                     "sameSite": "lax"
                 })
-                Router.push("/")
+                Router.push("/auth/phone/verifyPhone")
             }
         } catch (err) {
             const error = err as AxiosError<{ type: string; errors?: Record<string, string>; message?: string }>
