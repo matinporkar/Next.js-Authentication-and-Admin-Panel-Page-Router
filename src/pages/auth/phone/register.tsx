@@ -9,29 +9,28 @@ import Input from '../../../../app/components/shared/input'
 
 interface RegisterFormValues {
     name: string,
-    email: string,
-    password: string
+    phone: string
 }
 
 const Register: NextPage = () => {
 
     const initialValues: RegisterFormValues = {
         name: "",
-        email: "",
-        password: ""
+        phone: "09"
     }
+
+    const phoneRegex = /^09\d{9}$/
 
     const validationSchema = Yup.object({
         name: Yup.string().required(),
-        email: Yup.string().email().required(),
-        password: Yup.string().min(8).required()
+        phone: Yup.string().matches(phoneRegex, 'Phone number is not valid').required()
     })
 
     const registerFormHandler = async (values: RegisterFormValues, actions) => {
         const res = await api.post("/auth/register", values)
         if (res.status == 201) {
             actions.resetForm()
-            Router.push("/auth/login")
+            Router.push("/auth/phone/login")
         }
     }
 

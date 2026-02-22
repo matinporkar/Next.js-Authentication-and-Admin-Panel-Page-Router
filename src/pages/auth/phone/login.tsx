@@ -9,8 +9,7 @@ import api from '../../../../app/services/callApi'
 import Input from '../../../../app/components/shared/input'
 
 interface LoginFormValues {
-    email: string,
-    password: string
+    phone: string,
 }
 
 const Login: NextPage = () => {
@@ -18,13 +17,13 @@ const Login: NextPage = () => {
     const [cookie, setCookie] = useCookies(["shop-token"])
 
     const initialValues: LoginFormValues = {
-        email: "",
-        password: ""
+        phone: "09"
     }
 
+    const phoneRegex = /^09\d{9}$/
+
     const validationSchema = Yup.object({
-        email: Yup.string().email().required(),
-        password: Yup.string().required()
+        phone: Yup.string().matches(phoneRegex, 'Phone number is not valid').required()
     })
 
     const loginFormHandler = async (values: LoginFormValues, actions: FormikHelpers<LoginFormValues>) => {
