@@ -29,6 +29,13 @@ const Login: NextPage = () => {
         }
     }, [token])
 
+    useEffect(() => {
+        Router.beforePopState(() => {
+            dispatch(clearToken())
+            return true
+        })
+    })
+
 
     const router = useRouter()
     useEffect(() => {
@@ -68,8 +75,8 @@ const Login: NextPage = () => {
                     "path": "/",
                     "sameSite": "lax"
                 })
+                await Router.replace("/")
                 dispatch(clearToken())
-                Router.replace("/")
             }
         } catch (err) {
             const error = err as AxiosError<{ type: string; errors?: Record<string, string>; message?: string }>
