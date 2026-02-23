@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Router from 'next/router'
 import api from '../../../../app/services/callApi'
 import Input from '../../../../app/components/shared/input'
+import { AxiosError } from 'axios'
 
 
 interface RegisterFormValues {
@@ -27,10 +28,19 @@ const Register: NextPage = () => {
     })
 
     const registerFormHandler = async (values: RegisterFormValues, actions) => {
-        const res = await api.post("/auth/register", values)
-        if (res.status == 201) {
-            actions.resetForm()
-            Router.push("/auth/phone/login")
+        try {
+            const res = await api.post("/auth/register", values)
+            if (res.status == 201) {
+                actions.resetForm()
+                Router.push("/auth/phone/login")
+            }
+        } catch (err) {
+            const error = err as AxiosError<{ type: string; errors?: Record<string, string>; message?: string }>
+            if (error.response?.data?.type === "ValidationError" && error.response.data.errors) {
+                actions.setErrors(error.response.data.errors)
+            } else {
+                console.log("this is general error and it hasnt type for showing in form")
+            }
         }
     }
 
