@@ -2,11 +2,12 @@ import { Formik, Form, FormikHelpers } from 'formik'
 import { NextPage } from 'next'
 import * as Yup from 'yup'
 import Link from 'next/link'
-import { useCookies } from 'react-cookie'
 import Router from 'next/router'
 import { AxiosError } from 'axios'
 import api from '../../../../app/services/callApi'
 import Input from '../../../../app/components/shared/input'
+import { useDispatch } from 'react-redux'
+import { setToken } from '../../../../app/store/authSlice'
 
 interface LoginFormValues {
     phone: string,
@@ -14,7 +15,7 @@ interface LoginFormValues {
 
 const Login: NextPage = () => {
 
-    const [cookie, setCookie] = useCookies(["code-token"])
+    const dispatch = useDispatch()
 
     const initialValues: LoginFormValues = {
         phone: "09"
@@ -31,12 +32,7 @@ const Login: NextPage = () => {
             const res = await api.post("/auth/login", values)
             if (res.status == 200) {
                 actions.resetForm()
-                setCookie("code-token", res.data.token, {
-                    "maxAge": 60,
-                    "domain": "localhost",
-                    "path": "/",
-                    "sameSite": "lax"
-                })
+                dispatch(setToken(res.data.token))
                 Router.push("/auth/phone/verifyPhone")
             }
         } catch (err) {

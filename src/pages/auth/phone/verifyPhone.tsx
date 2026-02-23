@@ -3,11 +3,14 @@ import { NextPage } from 'next'
 import * as Yup from 'yup'
 import Link from 'next/link'
 import { useCookies } from 'react-cookie'
-import Router from 'next/router'
+import Router, { useRouter } from 'next/router'
 import { AxiosError } from 'axios'
 import api from '../../../../app/services/callApi'
 import Input from '../../../../app/components/shared/input'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../../../../app/store'
+import { clearToken } from '../../../../app/store/authSlice'
 
 interface VerifyFormValues {
     code: string,
@@ -16,23 +19,28 @@ interface VerifyFormValues {
 
 const Login: NextPage = () => {
 
-    const [cookie, setCookie, removeCookie] = useCookies(["code-token"])
     const [cookies, setCookies] = useCookies(["shop-token"])
-    const [disabled , setDisabled] = useState(false)
-    const [timedOut , setTimeOut] = useState("")
+
+    const token = useSelector((state: RootState) => state.auth.token)
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        if (!cookie["code-token"]) {
+        if (!token) {
             Router.replace("/auth/phone/login")
         }
+    }, [token])
+
+
+    const router = useRouter()
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            dispatch(clearToken())
+            if (router.pathname == "/auth/phone/verifyPhone") {
+                alert("Timed Out. Please Login Again")
+            }
+        }, 60000)
+        return () => clearTimeout(timer)
     }, [])
-
-
-    setTimeout(() => {
-        setDisabled(true)
-        removeCookie("code-token", { path: "/", domain: "localhost" })
-        setTimeOut("Timed out.login again")
-    } , 59000)
 
 
     const initialValues: VerifyFormValues = {
@@ -50,9 +58,8 @@ const Login: NextPage = () => {
         try {
             const finalValues = {
                 ...values,
-                token: cookie["code-token"]
+                token: token
             }
-            console.log(finalValues)
             const res = await api.post("/auth/login/verify-phone", finalValues)
             if (res.status == 200) {
                 actions.resetForm()
@@ -62,7 +69,7 @@ const Login: NextPage = () => {
                     "path": "/",
                     "sameSite": "lax"
                 })
-                removeCookie("code-token", { path: "/", domain: "localhost" })
+                dispatch(clearToken())
                 Router.replace("/")
             }
         } catch (err) {
@@ -74,6 +81,7 @@ const Login: NextPage = () => {
             }
         }
     }
+
 
 
     return (
@@ -90,9 +98,8 @@ const Login: NextPage = () => {
                         <Form className="space-y-5">
 
                             <Input labelTitle='enter the code' inputName='code' Type='text' errorName='code' />
-                            <span className='text-xs text-red-500 mt-1'>{timedOut}</span>
 
-                            <button className="w-full bg-black text-white py-2 rounded-lg font-medium hover:bg-gray-800 transition duration-200 disabled:opacity-60" type='submit' disabled={disabled}>Submit</button>
+                            <button className="w-full bg-black text-white py-2 rounded-lg font-medium hover:bg-gray-800 transition duration-200 disabled:opacity-60" type='submit' >Submit</button>
 
                         </Form>
                     </Formik>
