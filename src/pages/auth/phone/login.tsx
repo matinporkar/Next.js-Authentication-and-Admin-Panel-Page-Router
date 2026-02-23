@@ -6,8 +6,8 @@ import Router from 'next/router'
 import { AxiosError } from 'axios'
 import api from '../../../../app/services/callApi'
 import Input from '../../../../app/components/shared/input'
-import { useDispatch } from 'react-redux'
 import { setToken } from '../../../../app/store/authSlice'
+import { useAppDispatch } from '../../../../app/hooks'
 
 interface LoginFormValues {
     phone: string,
@@ -15,7 +15,7 @@ interface LoginFormValues {
 
 const Login: NextPage = () => {
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const initialValues: LoginFormValues = {
         phone: "09"

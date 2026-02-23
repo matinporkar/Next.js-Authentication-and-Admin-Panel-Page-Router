@@ -8,9 +8,8 @@ import { AxiosError } from 'axios'
 import api from '../../../../app/services/callApi'
 import Input from '../../../../app/components/shared/input'
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../../../app/store'
 import { clearToken } from '../../../../app/store/authSlice'
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
 
 interface VerifyFormValues {
     code: string,
@@ -21,8 +20,8 @@ const Login: NextPage = () => {
 
     const [cookies, setCookies] = useCookies(["shop-token"])
 
-    const token = useSelector((state: RootState) => state.auth.token)
-    const dispatch = useDispatch()
+    const token = useAppSelector(state => state.auth.token)
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         if (!token) {
