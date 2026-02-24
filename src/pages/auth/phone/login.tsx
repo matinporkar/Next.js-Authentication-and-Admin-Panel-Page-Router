@@ -1,5 +1,4 @@
 import { Formik, Form, FormikHelpers } from 'formik'
-import { NextPage } from 'next'
 import * as Yup from 'yup'
 import Link from 'next/link'
 import Router from 'next/router'
@@ -8,12 +7,15 @@ import api from '../../../../app/services/callApi'
 import Input from '../../../../app/components/shared/input'
 import { setToken } from '../../../../app/store/authSlice'
 import { useAppDispatch } from '../../../../app/hooks'
+import { NextPageWithLayout } from '@/pages/_app'
+import { ReactElement } from 'react'
+import AuthLayout from '../../../../app/components/layouts/authLayout'
 
 interface LoginFormValues {
     phone: string,
 }
 
-const Login: NextPage = () => {
+const Login: NextPageWithLayout = () => {
 
     const dispatch = useAppDispatch()
 
@@ -77,6 +79,10 @@ const Login: NextPage = () => {
             </div>
         </>
     )
+}
+
+Login.getLayout = function getLayout(page : ReactElement) {
+    return <AuthLayout mode="publicOnly">{page}</AuthLayout>
 }
 
 export default Login;

@@ -1,5 +1,4 @@
 import { Formik, Form, FormikHelpers } from 'formik'
-import { NextPage } from 'next'
 import * as Yup from 'yup'
 import Input from '../../../app/components/shared/input'
 import Link from 'next/link'
@@ -7,13 +6,16 @@ import api from '../../../app/services/callApi'
 import { useCookies } from 'react-cookie'
 import Router from 'next/router'
 import { AxiosError } from 'axios'
+import { ReactElement } from 'react'
+import AuthLayout from '../../../app/components/layouts/authLayout'
+import { NextPageWithLayout } from '@/pages/_app'
 
 interface LoginFormValues {
     email: string,
     password: string
 }
 
-const Login: NextPage = () => {
+const Login: NextPageWithLayout = () => {
 
     const [cookie, setCookie] = useCookies(["shop-token"])
 
@@ -84,6 +86,10 @@ const Login: NextPage = () => {
             </div>
         </>
     )
+}
+
+Login.getLayout = function getLayout(page : ReactElement) {
+    return <AuthLayout mode="publicOnly">{page}</AuthLayout>
 }
 
 export default Login;

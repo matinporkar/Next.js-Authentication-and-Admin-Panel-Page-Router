@@ -1,5 +1,4 @@
 import { Formik, Form, FormikHelpers } from 'formik'
-import { NextPage } from 'next'
 import * as Yup from 'yup'
 import Link from 'next/link'
 import { useCookies } from 'react-cookie'
@@ -7,16 +6,17 @@ import Router, { useRouter } from 'next/router'
 import { AxiosError } from 'axios'
 import api from '../../../../app/services/callApi'
 import Input from '../../../../app/components/shared/input'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { clearToken } from '../../../../app/store/authSlice'
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
+import { NextPage } from 'next'
 
 interface VerifyFormValues {
     code: string,
 }
 
 
-const Login: NextPage = () => {
+const VerifyPhone: NextPage = () => {
 
     const [cookies, setCookies] = useCookies(["shop-token"])
 
@@ -24,10 +24,13 @@ const Login: NextPage = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        if (!token) {
+        if (!token && cookies["shop-token"]) {
+            Router.replace("/userPanel")
+        }
+        else if (!token) {
             Router.replace("/auth/phone/login")
         }
-    }, [token])
+    }, [token , cookies["shop-token"]])
 
     useEffect(() => {
         Router.beforePopState(() => {
@@ -124,4 +127,5 @@ const Login: NextPage = () => {
     )
 }
 
-export default Login;
+
+export default VerifyPhone;

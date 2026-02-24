@@ -1,12 +1,13 @@
 import { Formik, Form } from 'formik'
-import { NextPage } from 'next'
 import * as Yup from 'yup'
 import Input from '../../../app/components/shared/input'
 import Link from 'next/link'
 import api from '../../../app/services/callApi'
 import Router from 'next/router'
 import { AxiosError } from 'axios'
-
+import { ReactElement } from 'react'
+import AuthLayout from '../../../app/components/layouts/authLayout'
+import { NextPageWithLayout } from '@/pages/_app'
 
 interface RegisterFormValues {
     name: string,
@@ -14,7 +15,7 @@ interface RegisterFormValues {
     password: string
 }
 
-const Register: NextPage = () => {
+const Register: NextPageWithLayout = () => {
 
     const initialValues: RegisterFormValues = {
         name: "",
@@ -81,6 +82,10 @@ const Register: NextPage = () => {
             </div>
         </>
     )
+}
+
+Register.getLayout = function getLayout(page : ReactElement) {
+    return <AuthLayout mode="publicOnly">{page}</AuthLayout>
 }
 
 export default Register;
