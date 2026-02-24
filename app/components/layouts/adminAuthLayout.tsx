@@ -4,26 +4,21 @@ import { useCookies } from "react-cookie";
 
 interface Props {
     children: ReactNode;
-    mode : "protected" | "publicOnly"
 }
 
-export default function AuthLayout({ children , mode }: Props) {
+export default function AdminAuthLayout({ children }: Props) {
 
     const router = useRouter();
     const [checking, setChecking] = useState(true);
-    const [cookies] = useCookies(["shop-token"])
+    const [cookies] = useCookies(["admin-token"])
 
     useEffect(() => {
-        if (mode==="protected" && !cookies["shop-token"]) {
+        if (!cookies["admin-token"]) {
             router.replace("/auth/login") 
         }
 
-        if (mode==="publicOnly" && cookies["shop-token"]) {
-            router.replace("/userPanel") 
-        }
-
         setChecking(false)
-    }, [cookies["shop-token"]])
+    }, [cookies["admin-token"]])
 
     if (checking) return null
 

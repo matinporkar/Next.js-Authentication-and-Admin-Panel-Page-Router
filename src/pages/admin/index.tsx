@@ -1,9 +1,9 @@
 import { ReactElement } from "react";
 import { NextPageWithLayout } from "../_app";
-import AuthLayout from "../../../app/components/layouts/authLayout";
 import api from "../../../app/services/callApi";
 import { useCookies } from "react-cookie";
 import useSWR from "swr";
+import AdminAuthLayout from "../../../app/components/layouts/adminAuthLayout";
 
 
 const Dashboard: NextPageWithLayout = () => {
@@ -25,7 +25,7 @@ const Dashboard: NextPageWithLayout = () => {
 }
 
 Dashboard.getLayout = function getLayout(page: ReactElement) {
-    return <AuthLayout mode="protected">{page}</AuthLayout>
+    return <AdminAuthLayout>{page}</AdminAuthLayout>
 }
 
 export default Dashboard;
