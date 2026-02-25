@@ -1,27 +1,18 @@
 import { ReactElement } from "react";
 import { NextPageWithLayout } from "../_app";
 import AuthLayout from "../../../app/components/layouts/authLayout";
-import api from "../../../app/services/callApi";
-import { useCookies } from "react-cookie";
-import useSWR from "swr";
+import UserInfo from "../../../app/components/userPanel/userInfo";
 
 
 const Dashboard: NextPageWithLayout = () => {
-    const [cookie, setCookie] = useCookies(["shop-token"])
 
+    return (
 
-    const data = useSWR("user_me", () => {
-        const user = async () => {
-            const res = await api.get("/user", {
-                headers: {
-                    authorization: cookie["shop-token"]
-                }
-            })
-        }
-    })
-
-
-    return <h1>This is user dashboard</h1>
+        <div>
+            <UserInfo />
+        </div>
+        
+    )
 }
 
 Dashboard.getLayout = function getLayout(page: ReactElement) {
