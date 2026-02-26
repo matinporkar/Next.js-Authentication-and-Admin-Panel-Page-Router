@@ -1,4 +1,3 @@
-import { useCookies } from "react-cookie";
 import useSWR from "swr";
 import api from "../services/callApi";
 

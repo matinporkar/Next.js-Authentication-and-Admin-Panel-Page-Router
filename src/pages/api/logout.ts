@@ -5,23 +5,17 @@ type Data = {
   status: string;
 };
 
-interface ExtendedNextApiRequest extends NextApiRequest {
-  body : {
-    token : string
-  }
-}
-
 export default function handler(
-  req: ExtendedNextApiRequest,
+  req: NextApiRequest,
   res: NextApiResponse<Data>,
 ) {
 
   res.setHeader(
     "Set-Cookie",
-    cookie.serialize("shop-token", req.body.token , {
+    cookie.serialize("shop-token", "" , {
       httpOnly : true,
       path : "/",
-      maxAge : 3600 * 24 * 30,
+      maxAge : 0,
       sameSite : "lax"
     })
   )
