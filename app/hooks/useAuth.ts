@@ -4,8 +4,6 @@ import api from "../services/callApi";
 
 function useAuth() {
 
-    // const [cookie, setCookie] = useCookies(["shop-token"])
-
     const { data , isLoading  } = useSWR("user_me",
         async () => {
             const res = await api.get("/user")

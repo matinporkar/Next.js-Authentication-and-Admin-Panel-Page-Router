@@ -2,9 +2,10 @@ import { ReactElement } from "react";
 import { NextPageWithLayout } from "../_app";
 import AuthLayout from "../../../app/components/layouts/authLayout";
 import UserInfo from "../../../app/components/userPanel/userInfo";
+import { NextPage } from "next";
 
 
-const Dashboard: NextPageWithLayout = () => {
+const Dashboard: NextPage = () => {
 
     return (
 
@@ -15,8 +16,8 @@ const Dashboard: NextPageWithLayout = () => {
     )
 }
 
-Dashboard.getLayout = function getLayout(page: ReactElement) {
-    return <AuthLayout mode="protected">{page}</AuthLayout>
-}
+// Dashboard.getLayout = function getLayout(page: ReactElement) {
+//     return <AuthLayout mode="protected">{page}</AuthLayout>
+// }
 
 export default Dashboard;

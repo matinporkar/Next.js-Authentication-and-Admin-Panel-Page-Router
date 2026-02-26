@@ -10,12 +10,13 @@ import { useAppDispatch } from '../../../../app/hooks'
 import { NextPageWithLayout } from '@/pages/_app'
 import { ReactElement } from 'react'
 import AuthLayout from '../../../../app/components/layouts/authLayout'
+import { NextPage } from 'next'
 
 interface LoginFormValues {
     phone: string,
 }
 
-const Login: NextPageWithLayout = () => {
+const Login: NextPage = () => {
 
     const dispatch = useAppDispatch()
 
@@ -79,10 +80,6 @@ const Login: NextPageWithLayout = () => {
             </div>
         </>
     )
-}
-
-Login.getLayout = function getLayout(page : ReactElement) {
-    return <AuthLayout mode="publicOnly">{page}</AuthLayout>
 }
 
 export default Login;

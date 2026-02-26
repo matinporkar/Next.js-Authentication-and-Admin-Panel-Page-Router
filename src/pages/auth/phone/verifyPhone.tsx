@@ -1,16 +1,14 @@
 import { Formik, Form, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
 import Link from 'next/link'
-import { useCookies } from 'react-cookie'
 import Router, { useRouter } from 'next/router'
 import { AxiosError } from 'axios'
 import api from '../../../../app/services/callApi'
 import Input from '../../../../app/components/shared/input'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { clearToken } from '../../../../app/store/authSlice'
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
 import { NextPage } from 'next'
-import useAuth from '../../../../app/hooks/useAuth'
 
 interface VerifyFormValues {
     code: string,
@@ -19,21 +17,14 @@ interface VerifyFormValues {
 
 const VerifyPhone: NextPage = () => {
 
-    const { userData, isLoading } = useAuth()
-
     const token = useAppSelector(state => state.auth.token)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        if (isLoading) return;
-        
-        if (!token && userData) {
-            Router.replace("/userPanel")
-        }
-        else if (!token) {
+         if (!token) {
             Router.replace("/auth/phone/login")
         }
-    }, [token, userData , isLoading])
+    }, [token])
 
     useEffect(() => {
         Router.beforePopState(() => {

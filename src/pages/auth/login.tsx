@@ -9,13 +9,14 @@ import { AxiosError } from 'axios'
 import { ReactElement } from 'react'
 import AuthLayout from '../../../app/components/layouts/authLayout'
 import { NextPageWithLayout } from '@/pages/_app'
+import { NextPage } from 'next'
 
 interface LoginFormValues {
     email: string,
     password: string
 }
 
-const Login: NextPageWithLayout = () => {
+const Login: NextPage = () => {
 
     const [cookie, setCookie] = useCookies(["shop-token"])
 
@@ -88,8 +89,8 @@ const Login: NextPageWithLayout = () => {
     )
 }
 
-Login.getLayout = function getLayout(page : ReactElement) {
-    return <AuthLayout mode="publicOnly">{page}</AuthLayout>
-}
+// Login.getLayout = function getLayout(page : ReactElement) {
+//     return <AuthLayout mode="publicOnly">{page}</AuthLayout>
+// }
 
 export default Login;
