@@ -10,6 +10,7 @@ const api = axios.create({
 
 api.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
+        config.withCredentials = true;
         return config;
     },
     (error: AxiosError) => {

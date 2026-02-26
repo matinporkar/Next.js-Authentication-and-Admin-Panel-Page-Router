@@ -4,23 +4,23 @@ import api from "../services/callApi";
 
 function useAuth() {
 
-    const [cookie, setCookie] = useCookies(["shop-token"])
+    // const [cookie, setCookie] = useCookies(["shop-token"])
 
-    const { data } = useSWR(
-        cookie["shop-token"] ? "user_me" : null,
+    const { data , isLoading  } = useSWR("user_me",
         async () => {
-            const res = await api.get("/user", {
-                headers: {
-                    authorization: cookie["shop-token"]
-                }
-            })
+            const res = await api.get("/user")
 
             return res.data
+        },
+        {
+            revalidateOnFocus : false,
+            shouldRetryOnError : false
         }
     )
 
     return {
         userData: data,
+        isLoading
     }
 }
 

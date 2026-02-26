@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, ReactNode, useState } from "react";
 import { useCookies } from "react-cookie";
+import useAuth from "../../hooks/useAuth";
 
 interface Props {
     children: ReactNode;
@@ -10,22 +11,22 @@ interface Props {
 export default function AuthLayout({ children , mode }: Props) {
 
     const router = useRouter();
-    const [checking, setChecking] = useState(true);
-    const [cookies] = useCookies(["shop-token"])
+    const {userData , isLoading } = useAuth()
 
     useEffect(() => {
-        if (mode==="protected" && !cookies["shop-token"]) {
+        if (isLoading) return
+
+        if (mode==="protected" && !userData) {
             router.replace("/auth/login") 
         }
 
-        if (mode==="publicOnly" && cookies["shop-token"]) {
+        if (mode==="publicOnly" && userData) {
             router.replace("/userPanel") 
         }
 
-        setChecking(false)
-    }, [cookies["shop-token"]])
+    }, [userData, isLoading, mode])
 
-    if (checking) return null
+    if (isLoading) return null
 
     return <>{children}</>
 }

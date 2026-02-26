@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import { clearToken } from '../../../../app/store/authSlice'
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
 import { NextPage } from 'next'
+import useAuth from '../../../../app/hooks/useAuth'
 
 interface VerifyFormValues {
     code: string,
@@ -18,19 +19,21 @@ interface VerifyFormValues {
 
 const VerifyPhone: NextPage = () => {
 
-    const [cookies, setCookies] = useCookies(["shop-token"])
+    const { userData, isLoading } = useAuth()
 
     const token = useAppSelector(state => state.auth.token)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        if (!token && cookies["shop-token"]) {
+        if (isLoading) return;
+        
+        if (!token && userData) {
             Router.replace("/userPanel")
         }
         else if (!token) {
             Router.replace("/auth/phone/login")
         }
-    }, [token , cookies["shop-token"]])
+    }, [token, userData , isLoading])
 
     useEffect(() => {
         Router.beforePopState(() => {
@@ -72,11 +75,12 @@ const VerifyPhone: NextPage = () => {
             const res = await api.post("/auth/login/verify-phone", finalValues)
             if (res.status == 200) {
                 actions.resetForm()
-                setCookies("shop-token", res.data.user.token, {
-                    "maxAge": 3600 * 24 * 30,
-                    "domain": "localhost",
-                    "path": "/",
-                    "sameSite": "lax"
+                await fetch("/api/loginCookie", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ token: res.data.user.token })
                 })
                 await Router.replace("/")
                 dispatch(clearToken())
