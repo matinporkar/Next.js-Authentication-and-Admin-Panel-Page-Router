@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import api from "../services/callApi";
+import api from "../../../services/callApi";
 
 function useAuth() {
 

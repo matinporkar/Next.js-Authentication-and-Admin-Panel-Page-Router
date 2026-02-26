@@ -1,91 +1,26 @@
-import { Formik, Form, FormikHelpers } from 'formik'
-import * as Yup from 'yup'
+import { Formik, Form } from 'formik'
 import Link from 'next/link'
-import Router, { useRouter } from 'next/router'
-import { AxiosError } from 'axios'
-import api from '../../../../app/services/callApi'
-import Input from '../../../../app/components/shared/input'
-import { useEffect } from 'react'
-import { clearToken } from '../../../../app/store/authSlice'
-import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
+import { useRouter } from 'next/router'
+import { useAppSelector } from '../../../../app/hooks'
 import { NextPage } from 'next'
-
-interface VerifyFormValues {
-    code: string,
-}
+import { useAuthGuard } from '../../../../app/hooks/auth/login-register-phone/phone-verify/useAuthGuard'
+import { useClearTokenOnBack } from '../../../../app/hooks/auth/login-register-phone/phone-verify/useClearTokenOnBack'
+import { useVerifyTimeout } from '../../../../app/hooks/auth/login-register-phone/phone-verify/useVerifyTimeout'
+import { initialValues, validationSchema } from '../../../../app/hooks/auth/login-register-phone/phone-verify/verifyForm.config'
+import { useVerifyPhone } from '../../../../app/hooks/auth/login-register-phone/phone-verify/useVerifyPhone'
+import Input from '../../../../app/components/shared/input'
 
 
 const VerifyPhone: NextPage = () => {
 
     const token = useAppSelector(state => state.auth.token)
-    const dispatch = useAppDispatch()
-
-    useEffect(() => {
-         if (!token) {
-            Router.replace("/auth/phone/login")
-        }
-    }, [token])
-
-    useEffect(() => {
-        Router.beforePopState(() => {
-            dispatch(clearToken())
-            return true
-        })
-    })
-
-
     const router = useRouter()
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            dispatch(clearToken())
-            if (router.pathname == "/auth/phone/verifyPhone") {
-                alert("Timed Out. Please Login Again")
-            }
-        }, 60000)
-        return () => clearTimeout(timer)
-    }, [])
 
+    useAuthGuard(token)
+    useClearTokenOnBack()
+    useVerifyTimeout(router.pathname)
 
-    const initialValues: VerifyFormValues = {
-        code: "",
-    }
-
-
-    const vodeRegex = /^\d{6}$/
-    const validationSchema = Yup.object({
-        code: Yup.string().matches(vodeRegex, 'Code number is not valid').required()
-    })
-
-
-    const loginFormHandler = async (values: VerifyFormValues, actions: FormikHelpers<VerifyFormValues>) => {
-        try {
-            const finalValues = {
-                ...values,
-                token: token
-            }
-            const res = await api.post("/auth/login/verify-phone", finalValues)
-            if (res.status == 200) {
-                actions.resetForm()
-                await fetch("/api/loginCookie", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ token: res.data.user.token })
-                })
-                await Router.replace("/")
-                dispatch(clearToken())
-            }
-        } catch (err) {
-            const error = err as AxiosError<{ type: string; errors?: Record<string, string>; message?: string }>
-            if (error.response?.data?.type === "ValidationError" && error.response.data.errors) {
-                actions.setErrors(error.response.data.errors)
-            } else {
-                console.log("this is general error and it hasnt type for showing in form")
-            }
-        }
-    }
-
+    const {loginFormHandler} = useVerifyPhone(token)
 
 
     return (
@@ -121,6 +56,5 @@ const VerifyPhone: NextPage = () => {
         </>
     )
 }
-
 
 export default VerifyPhone;

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import useAuth from "../../hooks/useAuth"
+import useAuth from "../../hooks/auth/user-panel/useAuth"
 
 const UserInfo = () => {
 

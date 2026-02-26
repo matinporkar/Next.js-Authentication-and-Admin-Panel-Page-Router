@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, ReactNode, useState } from "react";
 import { useCookies } from "react-cookie";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../../hooks/auth/user-panel/useAuth";
 
 interface Props {
     children: ReactNode;
