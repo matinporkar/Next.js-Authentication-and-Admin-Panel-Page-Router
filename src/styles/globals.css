@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+.admin-panel-layout {
+    direction: rtl;
+}
