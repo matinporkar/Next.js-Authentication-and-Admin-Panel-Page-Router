@@ -1,23 +1,14 @@
 import { Dialog, Transition } from '@headlessui/react'
 import React, { Fragment } from "react"
 import {
-    CalendarIcon,
-    ChartBarIcon,
-    FolderIcon,
     HomeIcon,
     InboxIcon,
     UsersIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 
-const navigation = [
-    { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-    { name: 'Team', href: '#', icon: UsersIcon, current: false },
-    { name: 'Projects', href: '#', icon: FolderIcon, current: false },
-    { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-    { name: 'Documents', href: '#', icon: InboxIcon, current: false },
-    { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
-]
 
 interface props {
     sidebarOpen: boolean,
@@ -25,6 +16,17 @@ interface props {
 }
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen }: props) {
+
+    const router = useRouter()
+
+    const navigation = [
+        { name: 'Dashboard', href: '/admin', icon: HomeIcon, current: false },
+        { name: 'Users', href: '/admin/users', icon: UsersIcon, current: false },
+        { name: 'Products', href: '/admin/products', icon: InboxIcon, current: false }
+    ]
+
+    const updateCurrentNavigation = navigation.forEach((item) => router.pathname === item.href ? item.current = true : item.current = false)
+
 
     return (
         <>
@@ -83,7 +85,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: props) {
                                 <div className="mt-5 h-0 flex-1 overflow-y-auto">
                                     <nav className="space-y-1 px-2">
                                         {navigation.map((item) => (
-                                            <a
+                                            <Link
                                                 key={item.name}
                                                 href={item.href}
                                                 className={`${item.current ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white"} group flex items-center px-2 py-2 text-base font-medium rounded-md`}
@@ -93,7 +95,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: props) {
                                                     aria-hidden="true"
                                                 />
                                                 {item.name}
-                                            </a>
+                                            </Link>
                                         ))}
                                     </nav>
                                 </div>
@@ -120,7 +122,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: props) {
                     <div className="flex flex-1 flex-col overflow-y-auto">
                         <nav className="flex-1 space-y-1 px-2 py-4">
                             {navigation.map((item) => (
-                                <a
+                                <Link
                                     key={item.name}
                                     href={item.href}
                                     className={`${item.current ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white"} group flex items-center px-2 py-2 text-sm font-medium rounded-md`}
@@ -130,7 +132,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: props) {
                                         aria-hidden="true"
                                     />
                                     {item.name}
-                                </a>
+                                </Link>
                             ))}
                         </nav>
                     </div>
