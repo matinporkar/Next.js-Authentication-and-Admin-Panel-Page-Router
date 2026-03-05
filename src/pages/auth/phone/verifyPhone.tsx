@@ -8,7 +8,7 @@ import { useClearTokenOnBack } from '../../../../app/hooks/auth/login-register-p
 import { useVerifyTimeout } from '../../../../app/hooks/auth/login-register-phone/phone-verify/useVerifyTimeout'
 import { initialValues, validationSchema } from '../../../../app/hooks/auth/login-register-phone/phone-verify/verifyForm.config'
 import { useVerifyPhone } from '../../../../app/hooks/auth/login-register-phone/phone-verify/useVerifyPhone'
-import Input from '../../../../app/components/shared/input'
+import Input from '../../../../app/components/shared/form/input'
 
 
 const VerifyPhone: NextPage = () => {

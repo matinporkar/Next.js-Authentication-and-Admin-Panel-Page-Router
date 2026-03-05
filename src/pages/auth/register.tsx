@@ -1,6 +1,6 @@
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
-import Input from '../../../app/components/shared/input'
+import Input from '../../../app/components/shared/form/input'
 import Link from 'next/link'
 import api from '../../../app/services/callApi'
 import Router from 'next/router'
