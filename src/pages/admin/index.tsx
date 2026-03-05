@@ -8,7 +8,7 @@ const Dashboard: NextPageWithLayout = () => {
 }
 
 Dashboard.getLayout = function getLayout(page: ReactElement) {
-    return <AdminPanelLayout pageName="Dashboard">{page}</AdminPanelLayout>
+    return <AdminPanelLayout>{page}</AdminPanelLayout>
 }
 
 export default Dashboard;

@@ -8,7 +8,7 @@ const Users: NextPageWithLayout = () => {
 }
 
 Users.getLayout = function getLayout(page: ReactElement) {
-    return <AdminPanelLayout pageName="Users">{page}</AdminPanelLayout>
+    return <AdminPanelLayout>{page}</AdminPanelLayout>
 }
 
 export default Users;

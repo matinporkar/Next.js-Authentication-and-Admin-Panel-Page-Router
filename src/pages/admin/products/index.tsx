@@ -1,41 +1,84 @@
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { NextPageWithLayout } from "../../_app";
 import AdminPanelLayout from "../../../../app/components/layouts/adminPanel/adminPanelLayout";
-import { Dialog } from "@headlessui/react";
+import Modal from "../../../../app/components/shared/modal";
+import { Form, Formik } from "formik";
+import * as Yup from 'yup'
+import Input from "../../../../app/components/shared/input";
+import { useRouter } from "next/router";
 
 const people = [
     { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
 ]
 
 const Products: NextPageWithLayout = () => {
-    const [showAddProduct, setShowAddProduct] = useState(false);
 
+    const router = useRouter()
+    const setShowCreateProduct = (show : boolean) => {
+        router.push(`/admin/products${ show ? "?create-product" : "" }`)
+    }
 
     return (
         <>
-            <Dialog
-                as="div"
-                className="fixed inset-0 z-10 overflow-y-auto"
-                open={showAddProduct} onClose={() => setShowAddProduct(false)}>
-                {/* <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-[.4]" /> */}
-                <span className="inline-block h-screen align-middle">&#8203;</span>
-                <div className={`inline`}>
-                    <div
-                        className="inline-block w-full max-w-4xl mt-8 mb-20 overflow-hidden text-right align-middle transition-all transform bg-white shadow-xl rounded-lg opacity-100 scale-100">
-                        <div>
-                            <p>
-                                Are you sure you want to deactivate your account? All of your data
-                                will be permanently removed. This action cannot be undone.
-                            </p>
+        
+            {
+                "create-product" in router.query && <Modal
+                    setShow={() => setShowCreateProduct(false)}
+                >
+                    <div className="inline-block w-full max-w-3xl mt-8 mb-20 overflow-hidden text-right align-middle transition-all transform bg-white shadow-xl rounded-lg opacity-100 scale-100">
 
-                            <button onClick={() => setShowAddProduct(false)}>Deactivate</button>
-                            <button onClick={() => setShowAddProduct(false)}>Cancel</button>
-                        </div>
+                        <h2 className="text-xl font-bold leading-tight text-gray-800 py-5 px-7  border-b">ساخت محصول</h2>
+                        <Formik
+                            initialValues={{}}
+                            validationSchema={Yup.object().shape({})}
+                            onSubmit={() => { }}
+                        >
+                            {({ values, isSubmitting, setFieldValue }) => (
+                                <Form>
+                                    <div className="p-6 grid grid-cols-1 gap-y-6 sm:grid-cols-4 sm:gap-x-8">
+                                        <div className="sm:col-span-2">
+                                            <Input
+                                                labelTitle="نام محصول"
+                                                inputName="productName"
+                                                errorName="productName"
+                                            />
+                                        </div>
+
+                                        <div className="sm:col-span-2">
+                                            <Input
+
+                                                labelTitle="قیمت محصول"
+                                                inputName="productPrice"
+                                                errorName="productPrice"
+                                            />
+                                        </div>
+
+                                        <div className="sm:col-span-4">
+                                            <Input
+                                                labelTitle="درباره محصول"
+                                                inputName="aboutProduct"
+                                                errorName="aboutProduct"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="p-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center">
+                                        <button
+                                            type="submit"
+                                            className="ml-2 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-indigo-700 ">
+                                            ایجاد محصول
+                                        </button>
+                                        <button type="button" 
+                                        className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                        onClick={() => setShowCreateProduct(false)}>انصراف</button>
+                                    </div>
+                                </Form>
+                            )}
+                        </Formik>
                     </div>
-
-                </div>
-            </Dialog>
+                </Modal>
+            }
 
             <div className="px-4 sm:px-6 lg:px-8">
                 <div className="sm:flex sm:items-center">
@@ -47,7 +90,7 @@ const Products: NextPageWithLayout = () => {
                     </div>
                     <div className="mt-4 sm:mt-0 sm:mr-16 sm:flex-none">
                         <button
-                            onClick={() => setShowAddProduct(true)}
+                            onClick={() => setShowCreateProduct(true)}
                             type="button"
                             className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
                         >
@@ -156,8 +199,10 @@ const Products: NextPageWithLayout = () => {
                     </div>
                 </div>
             </div>
+            
         </>
     )
+    
 }
 
 Products.getLayout = function getLayout(page: ReactElement) {
