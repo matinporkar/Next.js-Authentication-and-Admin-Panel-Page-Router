@@ -29,7 +29,7 @@ const SelectBox: FC<SelectBoxProps> = ({ labelTitle, labelClass, selectBoxName, 
                         >
                             {
                                 options.map((option:SelectBoxOptions, index) => (
-                                    <option key={index} value={option.value}>{option.name}</option>
+                                    <option key={index} value={option.value} defaultValue={option.value}>{option.name}</option>
                                 ))
                             }
                         </select>

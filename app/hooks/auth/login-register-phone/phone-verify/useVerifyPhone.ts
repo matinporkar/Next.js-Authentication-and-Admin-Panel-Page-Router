@@ -1,6 +1,6 @@
 import { useRouter } from "next/router"
 import { useAppDispatch } from "../../.."
-import { VerifyFormValues } from "./types"
+import { VerifyFormValues } from "../../../../components/auth/login-register-phone/phone-verify/types"
 import { FormikHelpers } from "formik"
 import { clearToken } from "../../../../store/authSlice"
 import { AxiosError } from "axios"

@@ -6,7 +6,7 @@ import api from '../../../app/services/callApi'
 import Router from 'next/router'
 import { AxiosError } from 'axios'
 import { ReactElement } from 'react'
-import AuthLayout from '../../../app/components/layouts/authLayout'
+// import AuthLayout from '../../../app/components/layouts/authLayout'
 import { NextPageWithLayout } from '@/pages/_app'
 import { NextPage } from 'next'
 

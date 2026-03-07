@@ -4,7 +4,8 @@ export interface CreateProductFormProps {
 }
 
 export interface VerifyFormValues {
-    productName : string,
-    productPrice : number,
+    title : string,
+    productCategory : string,
+    price : number,
     aboutProduct : string
 }

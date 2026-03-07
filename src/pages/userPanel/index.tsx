@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { NextPageWithLayout } from "../_app";
-import AuthLayout from "../../../app/components/layouts/authLayout";
+// import AuthLayout from "../../../app/components/layouts/authLayout";
 import UserInfo from "../../../app/components/userPanel/userInfo";
 import { NextPage } from "next";
 

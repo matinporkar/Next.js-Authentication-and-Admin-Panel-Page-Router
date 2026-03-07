@@ -1,5 +1,5 @@
 import * as Yup from 'yup'
-import { VerifyFormValues } from "./types"
+import { VerifyFormValues } from "../../../../components/auth/login-register-phone/phone-verify/types"
 
 export const initialValues: VerifyFormValues = {
     code: "",

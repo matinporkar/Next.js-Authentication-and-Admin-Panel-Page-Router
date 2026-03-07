@@ -6,7 +6,7 @@ import { NextPage } from 'next'
 import { useAuthGuard } from '../../../../app/hooks/auth/login-register-phone/phone-verify/useAuthGuard'
 import { useClearTokenOnBack } from '../../../../app/hooks/auth/login-register-phone/phone-verify/useClearTokenOnBack'
 import { useVerifyTimeout } from '../../../../app/hooks/auth/login-register-phone/phone-verify/useVerifyTimeout'
-import { initialValues, validationSchema } from '../../../../app/hooks/auth/login-register-phone/phone-verify/verifyForm.config'
+import { initialValues, validationSchema } from '../../../../app/components/auth/login-register-phone/phone-verify/verifyForm.config'
 import { useVerifyPhone } from '../../../../app/hooks/auth/login-register-phone/phone-verify/useVerifyPhone'
 import Input from '../../../../app/components/shared/form/input'
 

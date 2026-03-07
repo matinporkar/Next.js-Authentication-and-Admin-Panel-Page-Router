@@ -4,20 +4,19 @@ import { CreateProductFormProps } from "./types";
 import { initialValues, validationSchema } from "./verifyForm.config";
 import Textarea from "../../../shared/form/textarea";
 import SelectBox from "../../../shared/form/selectBox";
+import { useCreateProductForm } from "../../../../hooks/adminPanel/products/create-product/useCreateProductForm";
+
 
 
 const CreateProductForm = ({ setShow }: CreateProductFormProps) => {
 
-    const CreateProductFormHandler = (values) => {
-        console.log(values)
-    }
-
+    const {createProductFormHandler} = useCreateProductForm()
 
     return (
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={CreateProductFormHandler}
+            onSubmit={createProductFormHandler}
         >
             {({ values, isSubmitting, setFieldValue }) => (
                 <Form className="admin-panel-layout">
@@ -26,9 +25,9 @@ const CreateProductForm = ({ setShow }: CreateProductFormProps) => {
                         <div className="sm:col-span-2">
                             <Input
                                 labelTitle="نام محصول"
-                                inputName="productName"
+                                inputName="title"
                                 Type="text"
-                                errorName="productName"
+                                errorName="title"
                             />
                         </div>
 
@@ -38,6 +37,7 @@ const CreateProductForm = ({ setShow }: CreateProductFormProps) => {
                                 selectBoxName="productCategory"
                                 options={
                                     [
+                                        { name: "لطفا یک دسته بندی انتخاب کنید", value: "" },
                                         { name: "جاوا اسکریپت", value: "JS" },
                                         { name: "ری اکت", value: "REACT" },
                                         { name: "تایپ اسکریپت", value: "TS" },
@@ -50,9 +50,9 @@ const CreateProductForm = ({ setShow }: CreateProductFormProps) => {
                         <div className="sm:col-span-2">
                             <Input
                                 labelTitle="قیمت محصول"
-                                inputName="productPrice"
+                                inputName="price"
                                 Type="text"
-                                errorName="productPrice"
+                                errorName="price"
                             />
                         </div>
 
