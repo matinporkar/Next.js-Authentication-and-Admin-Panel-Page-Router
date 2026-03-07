@@ -1,7 +1,7 @@
 import { useRouter } from "next/router"
-import api from "../../../../services/callApi"
+import api from "../../../services/callApi"
 import { AxiosError } from "axios"
-import { VerifyFormValues } from "../../../../components/adninPanel/products/createProductForm/types"
+import { VerifyFormValues } from "../../../components/adninPanel/products/createProductForm/types"
 import { FormikHelpers } from "formik"
 
 

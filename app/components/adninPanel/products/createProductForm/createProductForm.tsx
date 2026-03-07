@@ -4,7 +4,7 @@ import { CreateProductFormProps } from "./types";
 import { initialValues, validationSchema } from "./verifyForm.config";
 import Textarea from "../../../shared/form/textarea";
 import SelectBox from "../../../shared/form/selectBox";
-import { useCreateProductForm } from "../../../../hooks/adminPanel/products/create-product/useCreateProductForm";
+import { useCreateProductForm } from "../../../../hooks/adminPanel/products/useCreateProductForm";
 
 
 

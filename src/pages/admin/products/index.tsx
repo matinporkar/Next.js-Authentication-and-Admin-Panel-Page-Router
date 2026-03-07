@@ -1,18 +1,24 @@
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { NextPageWithLayout } from "../../_app";
 import AdminPanelLayout from "../../../../app/components/layouts/adminPanel/adminPanelLayout";
 import Modal from "../../../../app/components/shared/modal";
 import { useRouter } from "next/router";
 import CreateProductForm from "../../../../app/components/adninPanel/products/createProductForm/createProductForm";
+import useSWR from "swr";
+import useGetProducts from "../../../../app/hooks/adminPanel/products/useGetProducts";
 
-const people = [
-    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
-]
+
 
 const Products: NextPageWithLayout = () => {
 
     const router = useRouter()
+    const [page, setPage] = useState(1)
+
+    const { data: products, error } = useSWR({ url: "/admin/products", page }, useGetProducts)
+    const loadingProducts = !products && !error
+    console.log(products)
+
     const setShowCreateProduct = (show: boolean) => {
         router.push(`/admin/products${show ? "?create-product" : ""}`)
     }
@@ -21,7 +27,7 @@ const Products: NextPageWithLayout = () => {
         <>
 
             {
-                "create-product" in router.query && 
+                "create-product" in router.query &&
                 <Modal setShow={() => setShowCreateProduct(false)}>
                     <div className="inline-block w-full max-w-3xl mt-8 mb-20 overflow-hidden text-right align-middle transition-all transform bg-white shadow-xl rounded-lg opacity-100 scale-100">
                         <h2 className="text-xl font-bold leading-tight text-gray-800 py-5 px-7  border-b">ساخت محصول</h2>
@@ -52,37 +58,42 @@ const Products: NextPageWithLayout = () => {
                     <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                             <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                                <table className="min-w-full divide-y divide-gray-300">
-                                    <thead className="bg-gray-50">
-                                        <tr>
-                                            <th scope="col" className="py-3.5 pl-4 pr-3 text-right text-sm font-semibold text-gray-900 sm:pl-6">
-                                                شماره محصول
-                                            </th>
-                                            <th scope="col" className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">
-                                                عنوان
-                                            </th>
-                                            <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-gray-200 bg-white">
-                                        {people.map((person) => (
-                                            <tr key={person.email}>
-                                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                                    {person.name}
-                                                </td>
-                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.title}</td>
-                                                <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                    <a href="#" className="text-indigo-600 hover:text-indigo-900 ml-4">
-                                                        ویرایش
-                                                    </a>
-                                                    <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                        حذف
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
+
+                                {
+                                    loadingProducts 
+                                    ? <div className="p-5"><span> در حال دریافت اطلاعات...</span></div>
+                                    : <table className="min-w-full divide-y divide-gray-300">
+                                            <thead className="bg-gray-50">
+                                                <tr>
+                                                    <th scope="col" className="py-3.5 pl-4 pr-3 text-right text-sm font-semibold text-gray-900 sm:pl-6">
+                                                        شماره محصول
+                                                    </th>
+                                                    <th scope="col" className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">
+                                                        عنوان
+                                                    </th>
+                                                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="divide-y divide-gray-200 bg-white">
+                                                {products.map((product) => (
+                                                    <tr key={product.id}>
+                                                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                                            {product.id}
+                                                        </td>
+                                                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{product.title}</td>
+                                                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                                            <a href="#" className="text-indigo-600 hover:text-indigo-900 ml-4">
+                                                                ویرایش
+                                                            </a>
+                                                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                                                                حذف
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                }
 
                                 <div className="p-4 mt-2 border-t border-gray-200">
                                     <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
