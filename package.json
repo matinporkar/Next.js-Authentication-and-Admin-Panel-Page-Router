@@ -18,6 +18,7 @@
     "react": "19.1.0",
     "react-cookie": "^8.0.1",
     "react-dom": "19.1.0",
+    "react-paginate": "file:react-paginate-8.3.0.tgz",
     "react-redux": "^9.2.0",
     "swr": "^2.4.0",
     "yup": "^1.7.1"
