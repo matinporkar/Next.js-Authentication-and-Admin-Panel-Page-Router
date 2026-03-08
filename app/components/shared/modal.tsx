@@ -10,7 +10,7 @@ interface Props {
 export default function Modal({ children , setShow , show = true } : Props) {
 
     return (
-        <Dialog open={show} onClose={setShow} className="relative z-50">
+        <Dialog open={show} onClose={setShow} className="relative z-50 admin-panel-layout">
             <DialogBackdrop className="fixed inset-0 bg-black/40" />
             <div className="fixed inset-0 flex items-center justify-center p-4">
                 <DialogPanel className="w-full max-w-3xl bg-white rounded-lg shadow-xl">

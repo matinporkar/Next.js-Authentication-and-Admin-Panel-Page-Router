@@ -1,5 +1,4 @@
 import { ReactElement, useEffect, useState } from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { NextPageWithLayout } from "../../_app";
 import AdminPanelLayout from "../../../../app/components/layouts/adminPanel/adminPanelLayout";
 import Modal from "../../../../app/components/shared/modal";
@@ -8,12 +7,15 @@ import CreateProductForm from "../../../../app/components/adninPanel/products/cr
 import useSWR from "swr";
 import useGetProducts from "../../../../app/hooks/adminPanel/products/useGetProducts";
 import ReactCustomPaginate from "../../../../app/components/shared/reactCutsomPaginate";
+import ProductListItem from "../../../../app/components/adninPanel/products/productListItem/productListItem";
 
 
 const Products: NextPageWithLayout = () => {
 
-    const router = useRouter()
     const [page, setPage] = useState(1)
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState<boolean>(false)
+
+    const router = useRouter()
     const { page: queryPage } = router.query
 
     const { data, error } = useSWR({ url: "/admin/products", page }, useGetProducts)
@@ -30,6 +32,7 @@ const Products: NextPageWithLayout = () => {
     }
 
     const onPageChangeHandler = ({ selected }: { selected: number }) => router.push(`/admin/products?page=${selected + 1}`)
+
 
     return (
         <>
@@ -84,22 +87,7 @@ const Products: NextPageWithLayout = () => {
                                                     </tr>
                                                 </thead>
                                                 <tbody className="divide-y divide-gray-200 bg-white">
-                                                    {data?.products.map((product) => (
-                                                        <tr key={product.id}>
-                                                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                                                {product.id}
-                                                            </td>
-                                                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{product.title}</td>
-                                                            <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                                <a href="#" className="text-indigo-600 hover:text-indigo-900 ml-4">
-                                                                    ویرایش
-                                                                </a>
-                                                                <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                                    حذف
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    ))}
+                                                    {data?.products.map((product) => <ProductListItem key={product.id} product={product} />)}
                                                 </tbody>
                                             </table>
                                             : <div className="p-5"><span>محصولی وجود ندارد.</span></div>
