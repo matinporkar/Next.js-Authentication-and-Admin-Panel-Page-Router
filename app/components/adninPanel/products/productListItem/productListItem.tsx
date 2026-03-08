@@ -1,11 +1,13 @@
 import { useState } from "react";
 import DeleteConfirmation from "../../../shared/deleteConfimation";
+import { useDeleteProduct } from "../../../../hooks/adminPanel/products/useDeleteProduct";
 
 
-export default function ProductListItem({ product }) {
+export default function ProductListItem({ product , mutateProducts }) {
     const [ showDeleteConfirmation , setShowDeleteConfirmation ] = useState<boolean>(false);
 
-    const handleTrue = () => {console.log("deleted")}
+    const {handleTrue} = useDeleteProduct(product.id , mutateProducts)
+    
 
     return (
             <tr>

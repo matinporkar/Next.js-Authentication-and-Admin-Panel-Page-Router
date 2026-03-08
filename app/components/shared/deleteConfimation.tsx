@@ -2,14 +2,14 @@ import { Form, Formik } from "formik"
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline"
 import Modal from "./modal"
 
-interface Props {
-    title : string,
-    description : string,
-    handleTrue : () => void,
-    handleCancel : () => void
-}
+// interface Props {
+//     title : string,
+//     description : string,
+//     handleTrue : () => void,
+//     handleCancel : () => void
+// }
 
-export default function DeleteConfirmation({ handleCancel , handleTrue , title , description } : Props) {
+export default function DeleteConfirmation({ handleCancel , handleTrue , title , description }) {
 
     return (
         <Modal show={true} setShow={handleCancel}>

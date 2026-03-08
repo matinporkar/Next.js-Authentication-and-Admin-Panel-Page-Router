@@ -13,12 +13,11 @@ import ProductListItem from "../../../../app/components/adninPanel/products/prod
 const Products: NextPageWithLayout = () => {
 
     const [page, setPage] = useState(1)
-    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState<boolean>(false)
 
     const router = useRouter()
     const { page: queryPage } = router.query
 
-    const { data, error } = useSWR({ url: "/admin/products", page }, useGetProducts)
+    const { data, error , mutate } = useSWR({ url: "/admin/products", page }, useGetProducts)
     const loadingProducts = !data && !error
 
     useEffect(() => {
@@ -87,7 +86,7 @@ const Products: NextPageWithLayout = () => {
                                                     </tr>
                                                 </thead>
                                                 <tbody className="divide-y divide-gray-200 bg-white">
-                                                    {data?.products.map((product) => <ProductListItem key={product.id} product={product} />)}
+                                                    {data?.products.map((product) => <ProductListItem key={product.id} product={product} mutateProducts={mutate} />)}
                                                 </tbody>
                                             </table>
                                             : <div className="p-5"><span>محصولی وجود ندارد.</span></div>
