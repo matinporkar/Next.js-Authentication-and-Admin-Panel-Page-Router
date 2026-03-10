@@ -5,12 +5,12 @@ import { VerifyFormValues } from "../../../components/adninPanel/products/create
 import api from "../../../services/callApi"
 
 
-export const useCreateProductForm = () => {
+export const useUpdateProductForm = (productid) => {
 
     const router = useRouter()
-    const createProductFormHandler = async (values:VerifyFormValues , actions:FormikHelpers<VerifyFormValues>) => {
+    const updateProductFormHandler = async (values:VerifyFormValues , actions:FormikHelpers<VerifyFormValues>) => {
         try {
-            const res = await api.post("/products/create", {
+            const res = await api.post(`/products/${productid}/update`, {
                 ...values,
                 body : values.aboutProduct,
                 category : values.productCategory
@@ -29,5 +29,5 @@ export const useCreateProductForm = () => {
         }
     }
 
-    return { createProductFormHandler }
+    return { updateProductFormHandler }
 }

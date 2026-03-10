@@ -1,9 +1,11 @@
 import { useState } from "react";
 import DeleteConfirmation from "../../../shared/deleteConfimation";
 import { useDeleteProduct } from "../../../../hooks/adminPanel/products/useDeleteProduct";
+import { useRouter } from "next/router";
 
 
 export default function ProductListItem({ product , mutateProducts }) {
+    const router = useRouter()
     const [ showDeleteConfirmation , setShowDeleteConfirmation ] = useState<boolean>(false);
 
     const {handleTrue} = useDeleteProduct(product.id , mutateProducts)
@@ -27,9 +29,9 @@ export default function ProductListItem({ product , mutateProducts }) {
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{product.title}</td>
                 <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                    <a href="#" className="text-indigo-600 hover:text-indigo-900 ml-4">
+                    <button onClick={() => router.push(`/admin/products/${product.id}/edit`)} className="text-indigo-600 hover:text-indigo-900 ml-4">
                         ویرایش
-                    </a>
+                    </button>
                     <button onClick={() => setShowDeleteConfirmation(true)} className="text-indigo-600 hover:text-indigo-900">
                         حذف
                     </button>
