@@ -27,11 +27,6 @@ const AdminPanelLayout = ({ children }: Props) => {
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
-    // if(! user?.is_admin ) {
-    //     router.push('/')
-    //     return <></>;
-    // }
-
     return (
         <>
             <div className="admin-panel-layout">

@@ -8,16 +8,20 @@ import useSWR from "swr";
 import useGetProducts from "../../../../app/hooks/adminPanel/products/useGetProducts";
 import ReactCustomPaginate from "../../../../app/components/shared/reactCutsomPaginate";
 import ProductListItem from "../../../../app/components/adninPanel/products/productListItem/productListItem";
+import useAuth from "../../../../app/hooks/auth/user-panel/useAuth";
+import useAdminAccess from "../../../../app/hooks/adminPanel/useAdminAccess";
 
 
 const Products: NextPageWithLayout = () => {
 
     const [page, setPage] = useState(1)
 
+    const access = useAdminAccess("manage_products")
+
     const router = useRouter()
     const { page: queryPage } = router.query
 
-    const { data, error , mutate } = useSWR({ url: "/admin/products", page }, useGetProducts)
+    const { data, error, mutate } = useSWR({ url: "/admin/products", page }, useGetProducts)
     const loadingProducts = !data && !error
 
     useEffect(() => {
@@ -73,23 +77,26 @@ const Products: NextPageWithLayout = () => {
                                     loadingProducts
                                         ? <div className="p-5"><span> در حال دریافت اطلاعات...</span></div>
                                         : data?.products.length > 0
-                                            ? <table className="min-w-full divide-y divide-gray-300">
-                                                <thead className="bg-gray-50">
-                                                    <tr>
-                                                        <th scope="col" className="py-3.5 pl-4 pr-3 text-right text-sm font-semibold text-gray-900 sm:pl-6">
-                                                            شماره محصول
-                                                        </th>
-                                                        <th scope="col" className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">
-                                                            عنوان
-                                                        </th>
-                                                        <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6"></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody className="divide-y divide-gray-200 bg-white">
-                                                    {data?.products.map((product) => <ProductListItem key={product.id} product={product} mutateProducts={mutate} />)}
-                                                </tbody>
-                                            </table>
+                                            ? access.length > 0 ?
+                                                <table className="min-w-full divide-y divide-gray-300">
+                                                    <thead className="bg-gray-50">
+                                                        <tr>
+                                                            <th scope="col" className="py-3.5 pl-4 pr-3 text-right text-sm font-semibold text-gray-900 sm:pl-6">
+                                                                شماره محصول
+                                                            </th>
+                                                            <th scope="col" className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">
+                                                                عنوان
+                                                            </th>
+                                                            <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody className="divide-y divide-gray-200 bg-white">
+                                                        {data?.products.map((product) => <ProductListItem key={product.id} product={product} mutateProducts={mutate} />)}
+                                                    </tbody>
+                                                </table>
+                                                : <div className="p-5"><span>اجازه ی دسترسی به این صفحه را ندارید.</span></div> 
                                             : <div className="p-5"><span>محصولی وجود ندارد.</span></div>
+
                                 }
 
                                 {
