@@ -1,5 +1,5 @@
 ![Cover](./adminPanel.png)
-![Cover](./login.png)
+![Cover](./loginForm.png)
 
 # Next.js Authentication and Admin Panel (Page Router)
 
