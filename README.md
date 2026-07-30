@@ -43,7 +43,7 @@ A production-inspired authentication and administration system built with Next.j
 1. Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/matinporkar/Next.js-Authentication-and-Admin-Panel-Page-Router.git
 ```
 
 2. Navigate to the project directory
