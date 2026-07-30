@@ -1,3 +1,6 @@
+![Cover](./adminPanel.png)
+![Cover](./login.png)
+
 # Next.js Authentication and Admin Panel (Page Router)
 
 A production-inspired authentication and administration system built with Next.js Page Router. This project demonstrates secure user authentication, protected routes, role-based access control, and a modern admin dashboard architecture. It highlights best practices for building scalable web applications with clean project structure and reusable components.
