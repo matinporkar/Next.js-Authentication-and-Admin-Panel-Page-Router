@@ -23,17 +23,16 @@ A production-inspired authentication and administration system built with Next.j
 
 ## 🛠️ Tech Stack
 
-- Next.js (Page Router)
-- React
+- Next.js 15 (Page Router)
+- React 19
 - TypeScript
-- NextAuth.js / Auth.js
-- Tailwind CSS
-- MongoDB
-- Mongoose
-- JWT Authentication
-- React Hook Form
-- Zod
+- Redux Toolkit
+- React Redux
 - Axios
+- SWR
+- Formik
+- Yup
+- Tailwind CSS
 
 ---
 
