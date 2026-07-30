@@ -1,5 +1,4 @@
 ![Cover](./adminPanel.png)
-![Cover](./loginForm.png)
 
 # Next.js Authentication and Admin Panel (Page Router)
 
@@ -37,6 +36,8 @@ A production-inspired authentication and administration system built with Next.j
 - Axios
 
 ---
+
+![Cover](./loginForm.png)
 
 ## 🚀 How to Run
 
