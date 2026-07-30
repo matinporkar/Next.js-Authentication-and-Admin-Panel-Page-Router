@@ -1,40 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Next.js Authentication and Admin Panel (Page Router)
 
-## Getting Started
+A production-inspired authentication and administration system built with Next.js Page Router. This project demonstrates secure user authentication, protected routes, role-based access control, and a modern admin dashboard architecture. It highlights best practices for building scalable web applications with clean project structure and reusable components.
 
-First, run the development server:
+---
+
+## ✨ Features
+
+- Secure user authentication and authorization
+- Protected routes with session-based access control
+- Role-based access for administrators and users
+- Modern admin dashboard interface
+- User profile and account management
+- Responsive design for desktop and mobile devices
+- Form validation and error handling
+- Reusable UI components and modular architecture
+- Optimized routing using Next.js Page Router
+- Clean and maintainable project structure
+
+---
+
+## 🛠️ Tech Stack
+
+- Next.js (Page Router)
+- React
+- TypeScript
+- NextAuth.js / Auth.js
+- Tailwind CSS
+- MongoDB
+- Mongoose
+- JWT Authentication
+- React Hook Form
+- Zod
+- Axios
+
+---
+
+## 🚀 How to Run
+
+1. Clone the repository
+
+```bash
+git clone <repository-url>
+```
+
+2. Navigate to the project directory
+
+```bash
+cd Next.js-Authentication-and-Admin-Panel-Page-Router
+```
+
+3. Install dependencies
+
+```bash
+npm install
+```
+
+4. Configure environment variables
+
+Create a `.env.local` file and add the required environment variables.
+
+5. Start the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+6. Open your browser and visit:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+---
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+## 🎯 Purpose of This Project
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project was developed to demonstrate the implementation of a secure authentication system and a scalable admin dashboard using modern Next.js development practices. It focuses on:
 
-## Learn More
+- Building secure authentication and authorization flows
+- Managing protected routes and user sessions
+- Implementing role-based access control (RBAC)
+- Designing reusable and maintainable application architecture
+- Following scalable coding patterns for production-ready applications
 
-To learn more about Next.js, take a look at the following resources:
+It serves as a portfolio project showcasing practical experience in building secure, full-stack web applications with **Next.js**, **TypeScript**, and modern authentication techniques.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📩 Feedback
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+If you have any suggestions, improvements, or feedback, feel free to open an issue or submit a pull request.
